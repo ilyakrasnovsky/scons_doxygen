@@ -20,4 +20,7 @@ __pycache__
 
 site_scons/
 
+#vscode settings
+/.vscode/
+
 # vim: set syntax=conf tabstop=2 expandtab nospell:

@@ -55,7 +55,11 @@ def DoxyfileParse(file_contents, conf_dir, data=None):
         data = {}
 
     import shlex
-    lex = shlex.shlex(instream=file_contents, posix=True)
+    lex = None
+    if (type(file_contents) == bytes):
+        lex = shlex.shlex(instream=file_contents.decode("utf-8"), posix=True)
+    else:
+        lex = shlex.shlex(instream=file_contents, posix=True)
     lex.wordchars += "*+./-:@"
     lex.whitespace = lex.whitespace.replace("\n", "")
     lex.escape = ""
@@ -120,7 +124,7 @@ def DoxyfileParse(file_contents, conf_dir, data=None):
             append_data(data, key, new_data, '\\')
 
     # compress lists of len 1 into single strings
-    for (k, v) in data.items():
+    for (k, v) in list(data.items()):
         if len(v) == 0:
             data.pop(k)
 
